@@ -29,7 +29,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    fetch("https://s3.us-east-2.amazonaws.com/denniscalvert/products.json")
+    fetch("http://localhost:2990/products")
       .then(res => res.json())
       .then(res => this.setState({ gridData: res.data }));
   }
