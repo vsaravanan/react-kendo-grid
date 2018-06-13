@@ -1,58 +1,63 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import {
-  Grid,
-  GridColumn as Column,
-  GridCell
-} from "@progress/kendo-react-grid";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Grid, GridColumn as Column } from '@progress/kendo-react-grid';
 
-class CustomCell extends GridCell {
-  render() {
-    return (
-      <td>
-        <input
-          disabled
-          type="checkbox"
-          checked={this.props.dataItem[this.props.field]}
-        />
-      </td>
-    );
-  }
-}
+import { orderBy } from '@progress/kendo-data-query';
+
+import { products as productimp } from './products.json';
+
+const products = productimp.data;
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      gridData: []
-    };
-  }
+    
+    constructor(props) {
+        super(props);
+        this.state = {
+            fields: Object.getOwnPropertyNames(products[0]).slice(0, 5),
+            products: this.GetProducts([]),
+            sort: [],
+            //allowUnsort: true,
+           // multiple: false
+        };
+        
+        this.sortChange = this.sortChange.bind(this);
+    }
 
-  componentDidMount() {
-    fetch("http://localhost:2990/products")
-      .then(res => res.json())
-      .then(res => this.setState({ gridData: res.data }));
-  }
+    sortChange(event) {
+        this.setState({
+            products: this.GetProducts(event.sort),
+            sort: event.sort
+        });
+    }
 
-  render() {
-    return (
-      <div>
-        <Grid style={{ maxHeight: "400px" }} data={this.state.gridData} pageable={true} sortable={true}>
-          <Column field="ProductID" title="ID" width="50px" />
-          <Column field="ProductName" title="Name" width="250px" />
-          <Column field="Category.CategoryName" title="CategoryName" />
-          <Column field="UnitPrice" title="Price" width="80px" sortable={true} />
-          <Column field="UnitsInStock" title="In stock" width="80px" />
-          <Column
-            field="Discontinued"
-            title="Discontinued"
-            width="120px"
-            cell={CustomCell}
-          />
-        </Grid>
-      </div>
-    );
-  }
+    GetProducts(sort) {
+        return orderBy(products, sort);
+    }
+
+    render() {
+        
+        return (
+            <div>
+
+                <Grid
+                    style={{ height: '300px' }}
+                    data={this.state.products}
+                    sortable={true}
+                        //allowUnsort: true,
+                        //mode: this.state.multiple ? 'multiple' : 'single'
+                    
+                    sort={this.state.sort}
+                    onSortChange={this.sortChange}
+                >
+                    <Column field="ProductID" />
+                    <Column field="ProductName" title="Product Name" />
+                    <Column field="UnitPrice" title="Unit Price" />
+                </Grid>
+            </div>
+        );
+    }
 }
+
+
 
 ReactDOM.render(<App />, document.getElementById("root"));
