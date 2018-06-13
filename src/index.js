@@ -37,11 +37,11 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <Grid style={{ maxHeight: "400px" }} data={this.state.gridData}>
+        <Grid style={{ maxHeight: "400px" }} data={this.state.gridData} pageable={true} sortable={true}>
           <Column field="ProductID" title="ID" width="50px" />
           <Column field="ProductName" title="Name" width="250px" />
           <Column field="Category.CategoryName" title="CategoryName" />
-          <Column field="UnitPrice" title="Price" width="80px" />
+          <Column field="UnitPrice" title="Price" width="80px" sortable={true} />
           <Column field="UnitsInStock" title="In stock" width="80px" />
           <Column
             field="Discontinued"
