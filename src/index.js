@@ -1,10 +1,10 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import { Grid, GridColumn as Column } from "@progress/kendo-react-grid";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Grid, GridColumn as Column } from '@progress/kendo-react-grid';
 
-import { orderBy } from "@progress/kendo-data-query";
+import { orderBy } from '@progress/kendo-data-query';
 
-import { products as productimp } from "./products.json";
+import { products as productimp } from './products.json';
 
 const products = productimp.data;
 
@@ -41,7 +41,7 @@ class App extends React.Component {
     return (
       <div>
         <Grid
-          style={{ height: "300px" }}
+          style={{ height: '300px' }}
           data={this.state.products}
           sortable={true}
           //allowUnsort: true,
@@ -50,13 +50,13 @@ class App extends React.Component {
           sort={this.state.sort}
           onSortChange={this.sortChange}
         >
-          <Column field="ProductID" />
-          <Column field="ProductName" title="Product Name" />
-          <Column field="UnitPrice" title="Unit Price" />
+          <Column field='ProductID' />
+          <Column field='ProductName' title='Product Name' />
+          <Column field='UnitPrice' title='Unit Price' />
         </Grid>
       </div>
     );
   }
 }
 
-ReactDOM.render(<App />, document.getElementById("root"));
+ReactDOM.render(<App />, document.getElementById('root'));
